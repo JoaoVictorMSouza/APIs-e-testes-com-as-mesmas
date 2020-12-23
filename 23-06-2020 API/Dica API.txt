@@ -1,0 +1,36 @@
+dotnet ef dbcontext scaffold "server=localhost;user id=root;password=12345;database=apidb" Pomelo.EntityFrameworkCore.MySql -o Models --data-annotations --force
+
+
+dotnet tool install --global dotnet-ef
+
+
+Microsoft.EntityFrameworkCore.Design
+Microsoft.EntityFrameworkCore
+Pomelo.EntityFrameworkCore.MySql
+
+
+
+
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+
+[HttpPost]
+        public Models.TbFilme adicionarFilme(Models.TbFilme filme)
+        {
+            Models.apidbContext contexto = new Models.apidbContext();
+            contexto.Add(filme);
+            contexto.SaveChanges();
+            return filme;
+        }
+        [HttpGet]
+        public List<Models.TbFilme> consultarFilmes()
+        {
+            Models.apidbContext contexto = new Models.apidbContext();
+            return contexto.TbFilme.ToList();
+        }
